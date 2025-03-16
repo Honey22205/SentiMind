@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen font-inter flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1786/1786971.png" alt="Logo" class="h-10 w-10 animate-float">
+                    <span class="text-xl font-semibold text-gray-800 ml-2">SentiMind</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition-all">
+                        <i class="fas fa-book mr-1"></i>
+                        Docs
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition-all">
+                        <i class="fas fa-question-circle mr-1"></i>
+                        Help
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <header class="text-center mb-12 animate-fade-in">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4 tracking-tight animate-slide-in">
+                Sentiment Analysis Dashboard
+            </h1>
+            <p class="text-gray-600 text-xl animate-fade-in-delay max-w-2xl mx-auto">
+                Analyze emotions and sentiments in text using advanced AI technology
+            </p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+            <!-- Input Section -->
+            <form id="feedbackForm" class="bg-white rounded-xl shadow-lg p-8 mb-8 transform transition-all duration-300 hover:shadow-2xl">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800 flex items-center">
+                    <i class="fas fa-comment-dots mr-3 text-blue-500"></i>
+                    Enter Feedback
+                </h2>
+                <div id="feedbackContainer" class="space-y-4">
+                    <div class="feedback-input-group">
+                        <textarea 
+                            id="initialFeedback"
+                            class="w-full h-32 p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all resize-none"
+                            placeholder="Enter your feedback here..."
+                            required
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mt-6">
+                    <button type="button" 
+                            id="addMore" 
+                            class="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 flex items-center shadow-md">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Another
+                    </button>
+                    <button type="submit"
+                            id="analyze" 
+                            class="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center shadow-md">
+                        <i class="fas fa-magic mr-2"></i>
+                        <span class="analyze-text">Analyze</span>
+                        <span class="analyzing-text hidden">
+                            Analyzing...
+                        </span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Results Section -->
+            <div id="results" class="hidden space-y-8">
+                <div class="bg-white rounded-xl shadow-lg p-8 transform transition-all duration-300 hover:shadow-2xl">
+                    <h2 class="text-2xl font-semibold mb-6 text-gray-800 flex items-center">
+                        <i class="fas fa-chart-bar mr-3 text-green-500"></i>
+                        Analysis Results
+                    </h2>
+                    <div id="resultsList" class="space-y-6"></div>
+                </div>
+
+                <!-- Visualization Section -->
+                <div id="visualization" class="hidden bg-white rounded-xl shadow-lg p-8 transform transition-all duration-300 hover:shadow-2xl">
+                    <h2 class="text-2xl font-semibold mb-6 text-gray-800 flex items-center">
+                        <i class="fas fa-chart-pie mr-3 text-purple-500"></i>
+                        Sentiment Distribution
+                    </h2>
+                    <div class="aspect-w-16 aspect-h-9">
+                        <img id="visualizationImage" class="w-full rounded-lg shadow-md hover:shadow-xl transition-all" alt="Sentiment Distribution">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="hidden">
+                <div class="flex flex-col items-center justify-center py-12">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"></div>
+                    <p class="mt-4 text-gray-600">Analyzing your feedback...</p>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden bg-red-50 border-l-4 border-red-500 p-4 my-4 rounded-lg animate-shake">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-circle text-red-500"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-red-700" id="errorText"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all">
+                    <i class="fas fa-brain text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Advanced AI</h3>
+                    <p class="text-gray-600">Powered by state-of-the-art natural language processing models</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all">
+                    <i class="fas fa-bolt text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Real-time Analysis</h3>
+                    <p class="text-gray-600">Get instant sentiment analysis results for your feedback</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all">
+                    <i class="fas fa-chart-line text-4xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Visual Insights</h3>
+                    <p class="text-gray-600">Beautiful visualizations to understand sentiment patterns</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-lg mt-12">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition-all">
+                        <i class="fab fa-github"></i>
+                        <span class="ml-2">GitHub</span>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition-all">
+                        <i class="fas fa-code"></i>
+                        <span class="ml-2">API</span>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition-all">
+                        <i class="fas fa-shield-alt"></i>
+                        <span class="ml-2">Privacy</span>
+                    </a>
+                </div>
+                <div class="text-gray-500 text-sm">
+                    <p>© 2024 SentiMind. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html> 

@@ -1,0 +1,209 @@
+/* Base styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card styles */
+.sentiment-card {
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.sentiment-positive {
+    border-left-color: #10B981;
+    background-color: rgba(240, 253, 244, 0.8);
+}
+
+.sentiment-negative {
+    border-left-color: #EF4444;
+    background-color: rgba(254, 242, 242, 0.8);
+}
+
+.sentiment-neutral {
+    border-left-color: #F59E0B;
+    background-color: rgba(255, 251, 235, 0.8);
+}
+
+/* Score badges */
+.sentiment-score {
+    font-family: 'Inter', monospace;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.score-positive {
+    background-color: rgba(209, 250, 229, 0.8);
+    color: #065F46;
+}
+
+.score-negative {
+    background-color: rgba(254, 226, 226, 0.8);
+    color: #991B1B;
+}
+
+.score-neutral {
+    background-color: rgba(254, 243, 199, 0.8);
+    color: #92400E;
+}
+
+/* Input group */
+.feedback-input-group {
+    transition: all 0.3s ease;
+}
+
+.feedback-input-group textarea {
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.feedback-input-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Button states */
+button {
+    transition: all 0.3s ease;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+button:disabled:hover {
+    transform: none !important;
+    background-color: inherit;
+}
+
+/* Loading states */
+.analyzing .analyze-text {
+    display: none;
+}
+
+.analyzing .analyzing-text {
+    display: inline-flex;
+    align-items: center;
+}
+
+.analyzing .analyzing-text::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background-color: currentColor;
+    border-radius: 50%;
+    margin-left: 8px;
+    animation: pulse 1s infinite;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Animation classes */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-fade-in-delay {
+    animation: fadeIn 0.5s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.animate-pulse-light {
+    animation: pulse 2s infinite;
+}
+
+/* Result card hover effects */
+.result-card {
+    transition: all 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Footer styles */
+footer {
+    margin-top: auto;
+}
+
+footer a {
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    transform: translateY(-1px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    footer .flex-col {
+        text-align: center;
+    }
+} 
