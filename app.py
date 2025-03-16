@@ -76,7 +76,15 @@ def get_visualization():
         logger.error(f"Error serving visualization: {str(e)}")
         return jsonify({'error': 'Visualization not available'}), 404
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    logger.info(f"Starting server on port {port}")
-    app.run(host='0.0.0.0', port=port, debug=True) 
+# if __name__ == '__main__':
+#     port = int(os.environ.get('PORT', 5000))
+#     logger.info(f"Starting server on port {port}")
+#     app.run(host='0.0.0.0', port=port, debug=True) 
+
+
+# import os
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))  # Render assigns a dynamic port
+    app.run(host="0.0.0.0", port=port)
+
